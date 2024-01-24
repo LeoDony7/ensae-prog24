@@ -3,6 +3,7 @@ This is the grid module. It contains the Grid class and its associated methods.
 """
 
 import random
+import numpy as np
 
 class Grid():
     """
@@ -57,8 +58,11 @@ class Grid():
         """
         Checks is the current state of the grid is sorte and returns the answer as a boolean.
         """
-        # TODO: implement this function (and remove the line "raise NotImplementedError").
-        raise NotImplementedError
+        for i in range(0, self.m -1):
+            for j in range(0,self.n-1):
+                if self.state[i][j]!=self.n*i+j+1:
+                    return False
+        return True
 
     def swap(self, cell1, cell2):
         """
@@ -69,8 +73,13 @@ class Grid():
         cell1, cell2: tuple[int]
             The two cells to swap. They must be in the format (i, j) where i is the line and j the column number of the cell. 
         """
-        # TODO: implement this function (and remove the line "raise NotImplementedError").
-        raise NotImplementedError
+        (i_1,j_1), (i_2,j_2)= cell1,cell2
+        #A voir quelle va être la décision prise pour les swaps dans le cas où il n'y a que 2 lignes ou colonnes
+        if (i_1==i_2 and np.abs(j_1 -j_2)) or (j_1==j_2 and np.abs(i_1 -i_2)):
+            value_1=self.state[i_1][j_1]
+            value_2=self.state[i_2][j_2]
+            self.state[i_1][j_1]=value_2
+            self.state[i_2][j_2]=value_1
 
     def swap_seq(self, cell_pair_list):
         """
