@@ -3,7 +3,7 @@ This is the grid module. It contains the Grid class and its associated methods.
 """
 
 import random
-import numpy as np
+
 
 class Grid():
     """
@@ -75,11 +75,13 @@ class Grid():
         """
         (i_1,j_1), (i_2,j_2)= cell1,cell2
         #A voir quelle va être la décision prise pour les swaps dans le cas où il n'y a que 2 lignes ou colonnes
-        if (i_1==i_2 and np.abs(j_1 -j_2)) or (j_1==j_2 and np.abs(i_1 -i_2)):
+        if (i_1==i_2 and abs(j_1 -j_2)) or (j_1==j_2 and abs(i_1 -i_2)):
             value_1=self.state[i_1][j_1]
             value_2=self.state[i_2][j_2]
             self.state[i_1][j_1]=value_2
             self.state[i_2][j_2]=value_1
+        else:
+            raise ValueError
 
     def swap_seq(self, cell_pair_list):
         """
@@ -91,8 +93,15 @@ class Grid():
             List of swaps, each swap being a tuple of two cells (each cell being a tuple of integers). 
             So the format should be [((i1, j1), (i2, j2)), ((i1', j1'), (i2', j2')), ...].
         """
-        # TODO: implement this function (and remove the line "raise NotImplementedError").
-        raise NotImplementedError
+        for pair in cell_pair_list:
+            (i_1,j_1), (i_2,j_2)= pair[0],pair[1]
+            if (i_1==i_2 and abs(j_1 -j_2)) or (j_1==j_2 and abs(i_1 -i_2)):
+                value_1=self.state[i_1][j_1]
+                value_2=self.state[i_2][j_2]
+                self.state[i_1][j_1]=value_2
+                self.state[i_2][j_2]=value_1
+            else:
+                raise ValueError
 
     @classmethod
     def grid_from_file(cls, file_name): 
