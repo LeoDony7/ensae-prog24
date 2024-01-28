@@ -38,6 +38,8 @@ class Grid():
         if not initial_state:
             initial_state = [list(range(i*n+1, (i+1)*n+1)) for i in range(m)]            
         self.state = initial_state
+        ##ajout d'un attribut, un dictionnaire qui liste où est chaque numéro
+        self.coordinates={n*i+j+1 :(i,j) for i in range(m-1) for j in range(n-1)}
 
     def __str__(self): 
         """
