@@ -38,9 +38,9 @@ class Grid():
         if not initial_state:
             initial_state = [list(range(i*n+1, (i+1)*n+1)) for i in range(m)]            
         self.state = initial_state
-        ##ajout d'un attribut, un dictionnaire qui liste où est chaque numéro
-        self.coordinates={n*i+j+1 :(i,j) for i in range(m-1) for j in range(n-1)}
-
+        ##ajout d'un attribut, un dictionnaire qui liste où est chaque nombre
+        self.coordinates={self.state[i][j] :(i,j) for i in range(m) for j in range(n)}
+        ##il faut plutot le rajouter dans la fonction de résolution, là il se met pas à jour quand on fait un swap
     def __str__(self): 
         """
         Prints the state of the grid as text.
@@ -82,6 +82,9 @@ class Grid():
             value_2=self.state[i_2][j_2]
             self.state[i_1][j_1]=value_2
             self.state[i_2][j_2]=value_1
+            ##Ajout de lignes pour mettre à jour les coordonnées dans le dictionnaire
+            self.coordinates={self.state[i][j] :(i,j) for i in range(self.m) for j in range(self.n)}
+            ##on pourrait seulement modifier les coordonnées nécessaires, ce serait mieux
         else:
             raise ValueError
 
@@ -102,6 +105,8 @@ class Grid():
                 value_2=self.state[i_2][j_2]
                 self.state[i_1][j_1]=value_2
                 self.state[i_2][j_2]=value_1
+                ##Mise à jour des coordonnées des nombres
+                self.coordinates={self.state[i][j] :(i,j) for i in range(self.m) for j in range(self.n)}
             else:
                 raise ValueError
 
