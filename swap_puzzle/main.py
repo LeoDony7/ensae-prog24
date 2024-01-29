@@ -1,4 +1,5 @@
 from grid import Grid
+from solver import Solver
 
 g = Grid(2, 3)
 print(g)
@@ -11,10 +12,11 @@ print(file_name)
 g = Grid.grid_from_file(file_name)
 print(g)
 
-print(g.coordinates)
+h=Grid.grid_from_file("../input/grid4.in")
+print(h)
 
-g.swap((0,0),(0,1))
+essai2= Solver(h)
 
-print(g)
+essai2.get_solution()
 
-print(g.coordinates)
+
