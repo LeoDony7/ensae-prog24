@@ -18,7 +18,3 @@ g.swap((0,0),(0,1))
 print(g)
 
 print(g.coordinates)
-
-
-print('quoicoubeh')
-print('Hello')
