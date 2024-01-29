@@ -77,7 +77,7 @@ class Grid():
         """
         (i_1,j_1), (i_2,j_2)= cell1,cell2
         #A voir quelle va être la décision prise pour les swaps dans le cas où il n'y a que 2 lignes ou colonnes
-        if (i_1==i_2 and abs(j_1 -j_2)) or (j_1==j_2 and abs(i_1 -i_2)):
+        if (i_1==i_2 and abs(j_1 -j_2)<=1) or (j_1==j_2 and abs(i_1 -i_2)<=1):
             value_1=self.state[i_1][j_1]
             value_2=self.state[i_2][j_2]
             self.state[i_1][j_1]=value_2
@@ -100,7 +100,7 @@ class Grid():
         """
         for pair in cell_pair_list:
             (i_1,j_1), (i_2,j_2)= pair[0],pair[1]
-            if (i_1==i_2 and abs(j_1 -j_2)) or (j_1==j_2 and abs(i_1 -i_2)):
+            if (i_1==i_2 and abs(j_1 -j_2)<=1) or (j_1==j_2 and abs(i_1 -i_2)<=1):
                 value_1=self.state[i_1][j_1]
                 value_2=self.state[i_2][j_2]
                 self.state[i_1][j_1]=value_2
