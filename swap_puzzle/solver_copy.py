@@ -27,9 +27,8 @@ class Solver():
                 liste_cases= [(i_k,j_k)]+[(i_k,j) for j in range(j_k-1,j0-1,-1)]+[(i,j0) for i in range(i_k-1,i0-1,-1)]
             else :
                 liste_cases= [(i_k,j_k)]+[(i_k,j) for j in range(j_k+1,j0+1)]+[(i,j0) for i in range(i_k-1,i0-1,-1)]
-            
-
-            
+        liste_swap = [(liste_cases[i], liste_cases[i+1]) for i in range (len(liste_cases))]
+        return liste_swap
         
         # TODO: implement this function (and remove the line "raise NotImplementedError").
         # NOTE: you can add other methods and subclasses as much as necessary. The only thing imposed is the format of the solution returned.
