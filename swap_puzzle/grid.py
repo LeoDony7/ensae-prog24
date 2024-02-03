@@ -18,6 +18,8 @@ class Grid():
     state: list[list[int]]
         The state of the grid, a list of list such that state[i][j] is the number in the cell (i, j), i.e., in the i-th line and j-th column. 
         Note: lines are numbered 0..m and columns are numbered 0..n.
+    coordinates : dict[int,(int,int)]
+        Gives coordinates in the grid of each integer between 1 and m*n. coordinates[k] returns the coordinates (i_k,j_k) of the cell containing k
     """
     
     def __init__(self, m, n, initial_state = []):
@@ -38,9 +40,8 @@ class Grid():
         if not initial_state:
             initial_state = [list(range(i*n+1, (i+1)*n+1)) for i in range(m)]            
         self.state = initial_state
-        ##ajout d'un attribut, un dictionnaire qui liste où est chaque nombre
         self.coordinates={self.state[i][j] :(i,j) for i in range(m) for j in range(n)}
-        ##il faut plutot le rajouter dans la fonction de résolution, là il se met pas à jour quand on fait un swap
+
     def __str__(self): 
         """
         Prints the state of the grid as text.
@@ -76,15 +77,13 @@ class Grid():
             The two cells to swap. They must be in the format (i, j) where i is the line and j the column number of the cell. 
         """
         (i_1,j_1), (i_2,j_2)= cell1,cell2
-        #A voir quelle va être la décision prise pour les swaps dans le cas où il n'y a que 2 lignes ou colonnes
         if (i_1==i_2 and abs(j_1 -j_2)<=1) or (j_1==j_2 and abs(i_1 -i_2)<=1):
             value_1=self.state[i_1][j_1]
             value_2=self.state[i_2][j_2]
             self.state[i_1][j_1]=value_2
             self.state[i_2][j_2]=value_1
-            ##Ajout de lignes pour mettre à jour les coordonnées dans le dictionnaire
+            ##Updating coordinates of each integer
             self.coordinates={self.state[i][j] :(i,j) for i in range(self.m) for j in range(self.n)}
-            ##on pourrait seulement modifier les coordonnées nécessaires, ce serait mieux
         else:
             raise ValueError
 
@@ -105,7 +104,7 @@ class Grid():
                 value_2=self.state[i_2][j_2]
                 self.state[i_1][j_1]=value_2
                 self.state[i_2][j_2]=value_1
-                ##Mise à jour des coordonnées des nombres
+                ##Updating coordinates of each integer
                 self.coordinates={self.state[i][j] :(i,j) for i in range(self.m) for j in range(self.n)}
             else:
                 raise ValueError
