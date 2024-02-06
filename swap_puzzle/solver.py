@@ -1,4 +1,6 @@
 from grid import Grid
+from graph import Graph
+import itertools
 
 class Solver(): 
     """
@@ -46,3 +48,9 @@ class Solver():
             liste_swap+=liste_swap_k
         print(liste_swap)
 
+    def get_solution_bis(self):
+        '''
+        '''
+        permutation=[i for i in range(self.puzzle.n*self.puzzle.n+1)]
+        my_graph=Graph([i for i in itertools.permutations(permutation)])
+        print(my_graph)
