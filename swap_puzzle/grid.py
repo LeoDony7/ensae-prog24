@@ -18,8 +18,10 @@ class Grid():
     state: list[list[int]]
         The state of the grid, a list of list such that state[i][j] is the number in the cell (i, j), i.e., in the i-th line and j-th column. 
         Note: lines are numbered 0..m and columns are numbered 0..n.
-    coordinates : dict[int,(int,int)]
+    coordinates: dict[int,(int,int)]
         Gives coordinates in the grid of each integer between 1 and m*n. coordinates[k] returns the coordinates (i_k,j_k) of the cell containing k
+    key: tuple(int)
+        An unique immutable key representing a grid. The k-th number in the tuple is the number in the k-th cell of the grid, cells being read line by line from left to right
     """
     
     def __init__(self, m, n, initial_state = []):
@@ -41,6 +43,11 @@ class Grid():
             initial_state = [list(range(i*n+1, (i+1)*n+1)) for i in range(m)]            
         self.state = initial_state
         self.coordinates={self.state[i][j] :(i,j) for i in range(m) for j in range(n)}
+        K=[]
+        for ligne in self.state:
+            for i in ligne:
+                K.append(i)
+        self.key=tuple(K)
 
     def __str__(self): 
         """
