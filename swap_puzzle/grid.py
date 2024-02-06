@@ -35,7 +35,7 @@ class Grid():
         n: int
             Number of columns in the grid
         initial_state: list[list[int]]
-            The intiail state of the grid. Default is empty (then the grid is created sorted).
+            The initial state of the grid. Default is empty (then the grid is created sorted).
         """
         self.m = m
         self.n = n
@@ -115,6 +115,27 @@ class Grid():
                 self.coordinates={self.state[i][j] :(i,j) for i in range(self.m) for j in range(self.n)}
             else:
                 raise ValueError
+            
+    def are_neighbours(self,grille):
+        '''
+        we assume that the 2 grids are same-sized
+        '''
+        differents_cells=[]
+        for i in range(len(grille.key)):
+            if grille.key[i]!=self.key[i]:
+                differents_cells.append(self.coordinates[self.key[i]])
+        if differents_cells==[]:
+            return True            
+        if len(differents_cells)==2:
+            (i_1,j_1), (i_2,j_2)= differents_cells[0],differents_cells[1]
+            if (i_1==i_2 and abs(j_1 -j_2)<=1) or (j_1==j_2 and abs(i_1 -i_2)<=1):
+                return True
+        return False
+    ##transformer la fonction pour qu'elle s'utilise sur les tuples
+    ##il s'agit surtout de retrouver la formule qui donne (i,j) à partir de k 
+    ##voir si differents_cells peut être écrite en compréhension
+    ##voir si on modifie la classe Solver pour que cette fonction en soit une méthode
+
 
     @classmethod
     def grid_from_file(cls, file_name): 
