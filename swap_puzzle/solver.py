@@ -50,7 +50,13 @@ class Solver():
 
     def get_solution_bis(self):
         '''
+        décrire la fonction
+        pour ce qui est de la création des noeuds du graphe on est bon
         '''
         permutation=[i for i in range(self.puzzle.n*self.puzzle.n+1)]
-        my_graph=Graph([i for i in itertools.permutations(permutation)])
-        print(my_graph)
+        liste_permutation=itertools.permutations(permutation)
+        my_graph=Graph([i for i in liste_permutation])
+        for node1 in my_graph.nodes:
+            for node2 in my_graph.nodes:
+                return NotImplemented
+        return NotImplemented
