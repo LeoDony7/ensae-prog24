@@ -2,6 +2,22 @@ from grid import Grid
 from graph import Graph
 import itertools
 
+def are_neighbours(tuple1,tuple2):
+    differents_cells=[]
+    n=tuple1[-2]
+    for i in range(len(tuple1)-2):
+        if tuple2[i]!=tuple1[i]:
+            differents_cells.append((i//n,i%n))
+    if differents_cells==[]:
+        return True            
+    if len(differents_cells)==2:
+        (i_1,j_1), (i_2,j_2)= differents_cells[0],differents_cells[1]
+        if (i_1==i_2 and abs(j_1 -j_2)<=1) or (j_1==j_2 and abs(i_1 -i_2)<=1):
+            return True
+    return False
+
+
+
 class Solver(): 
     """
     A solver class, it contains methods to resolve a swap puzzle problem.
@@ -51,12 +67,15 @@ class Solver():
     def get_solution_bis(self):
         '''
         décrire la fonction
-        pour ce qui est de la création des noeuds du graphe on est bon
         '''
-        permutation=[i for i in range(self.puzzle.n*self.puzzle.n+1)]
+        permutation=[i for i in range(1,(self.puzzle.n*self.puzzle.m)+1)]
         liste_permutation=itertools.permutations(permutation)
-        my_graph=Graph([i for i in liste_permutation])
+        my_graph=Graph([i+(self.puzzle.n,self.puzzle.m) for i in liste_permutation])
         for node1 in my_graph.nodes:
             for node2 in my_graph.nodes:
-                return NotImplemented
-        return NotImplemented
+                if are_neighbours(node1,node2):
+                    if (node2 not in my_graph.graph[node1] or node1 not in my_graph.graph[node2]):
+                        my_graph.add_edge(node1,node2)
+        print(my_graph)
+
+##l'arête avec soi-même se met 2 fois dans la liste d'adjacence
