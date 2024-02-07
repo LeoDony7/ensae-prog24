@@ -8,13 +8,26 @@ def are_neighbours(tuple1,tuple2):
     for i in range(len(tuple1)-2):
         if tuple2[i]!=tuple1[i]:
             differents_cells.append((i//n,i%n))
+    '''
     if differents_cells==[]:
-        return True            
+        return True
+    '''      
+    #Voir si on garde le fait qu'il n'y ait pas d'arête vers soi-même
+    #A mon avis c'est mieux de pas mettre l'arête    
     if len(differents_cells)==2:
         (i_1,j_1), (i_2,j_2)= differents_cells[0],differents_cells[1]
         if (i_1==i_2 and abs(j_1 -j_2)<=1) or (j_1==j_2 and abs(i_1 -i_2)<=1):
             return True
     return False
+
+
+def what_is_the_swap(tuple1,tuple2):
+    differents_cells=[]
+    n=tuple1[-2]
+    for i in range(len(tuple1)-2):
+        if tuple2[i]!=tuple1[i]:
+            differents_cells.append((i//n,i%n))
+    return differents_cells
 
 
 
@@ -76,6 +89,12 @@ class Solver():
                 if are_neighbours(node1,node2):
                     if (node2 not in my_graph.graph[node1] or node1 not in my_graph.graph[node2]):
                         my_graph.add_edge(node1,node2)
-        print(my_graph)
+                        #à ce stade le graphe est bon mais le noeud lui même apparait 2 fois dans sa liste d'adjacence
+                        #Résolu grace à la suppression de l'arête vers soi-même
+        key_sorted=tuple(permutation+[self.puzzle.n]+[self.puzzle.m])
+        node_path=my_graph.bfs(self.puzzle.key,key_sorted)
+        swap_list=[tuple(what_is_the_swap(node_path[i],node_path[i+1])) for i in range(0, len(node_path)-1)]
+        print(swap_list)
 
-##l'arête avec soi-même se met 2 fois dans la liste d'adjacence
+## Ca marche youpi !!!! 
+## La complexité est merdique, ca crash au moins à partir de 9 cases
