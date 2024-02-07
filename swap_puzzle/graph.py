@@ -99,8 +99,10 @@ class Graph:
         """ 
         visited=[]
         queue=[src]
-        path=[[] for i in range(self.nb_nodes)]
-        path[src-1]=[src]
+        #path=[[] for i in range(self.nb_nodes)]
+        path_bis={i:[] for i in self.nodes}
+        #path[src-1]=[src]
+        path_bis[src]=[src]
         while len(queue)>0:
             node=queue.pop(0)
             if node not in visited:
@@ -108,10 +110,12 @@ class Graph:
                 neighbours=self.graph[node]
                 for neighbour in neighbours:
                     if neighbour not in queue:  ##verifier ca pour être sur qu'on a pas de répétition de noeuds
-                        path[neighbour-1]+=(path[node-1]+[neighbour])
+                        #path[neighbour-1]+=(path[node-1]+[neighbour])
+                        path_bis[neighbour]+=path_bis[node]+[neighbour]
                     queue.append(neighbour)
             if node==dst:
-                return path[node-1]
+                #return path[node-1]
+                return path_bis[node]
         return None   
         
 
