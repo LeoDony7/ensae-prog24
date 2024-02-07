@@ -3,8 +3,6 @@ This is the grid module. It contains the Grid class and its associated methods.
 """
 
 import random
-from key import Key
-
 
 class Grid():
     """
@@ -48,7 +46,7 @@ class Grid():
         for ligne in self.state:
             for i in ligne:
                 K.append(i)
-        self.key=Key(tuple(K+[self.n]+[self.m]))
+        self.key=tuple(K+[self.n]+[self.m])
 
     def __str__(self): 
         """
