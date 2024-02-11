@@ -2,7 +2,6 @@
 This is the grid module. It contains the Grid class and its associated methods.
 """
 
-import random
 
 class Grid():
     """
@@ -20,7 +19,9 @@ class Grid():
     coordinates: dict[int,(int,int)]
         Gives coordinates in the grid of each integer between 1 and m*n. coordinates[k] returns the coordinates (i_k,j_k) of the cell containing k
     key: tuple(int)
-        An unique immutable key representing a grid. The k-th number in the tuple is the number in the k-th cell of the grid, cells being read line by line from left to right
+        An unique immutable key representing a grid. It has n*m+2 cells
+        The n*m first elements are the number on the grid, in the reading order.
+        The last element is m and the penultimate is n.
     """
     
     def __init__(self, m, n, initial_state = []):
