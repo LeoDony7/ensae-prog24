@@ -13,9 +13,13 @@ print(file_name)
 g = Grid.grid_from_file(file_name)
 print(g)
 
+
 T= Grid.grid_from_file("../input/grid_test.in")
 Test=Solver(T)
 Test.get_solution()
 Test.get_solution_bfs()
 
 
+
+H=Grid.grid_from_file("../input/grid4.in")
+H.representation_graphique()

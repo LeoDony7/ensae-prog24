@@ -1,7 +1,8 @@
 """
 This is the grid module. It contains the Grid class and its associated methods.
 """
-
+import numpy as np
+import matplotlib.pyplot as plt
 
 class Grid():
     """
@@ -115,6 +116,36 @@ class Grid():
                 ## Updating coordinates of each integer
             else:
                 raise ValueError
+            
+    def representation_graphique(self):
+        '''
+        Gives a graphic representation of a grid using matplotlib.pyplot
+        '''
+        n=self.key[-2]
+        m=self.key[-1]
+        grille=self.key[:-2]  # tout sauf les 2 derniers
+        fig,ax=plt.subplots()
+        ax.set_yticks(np.arange(0,n+1,1)) # Endroit où on place les marqueurs sur l'axe des Y, donc en rapport avec le nombre de lignes du truc
+        ax.set_xticks(np.arange(0,m+1,1)) # Endroit où on place les marqueurs sur l'axe des X, donc en rapport avec le nombre de colonnes du truc
+
+        # Création de la grille vierge
+        for i in range(1, n+1):
+            ax.axhline(i, color='black', linewidth=2) # Lignes horizontales qui délimitent les lignes
+        for j in range(1,m+1):
+            ax.axvline(j, color='black', linewidth=2) # Lignes verticales qui délimitent les colonnes
+
+        # Remplissage de la grille
+        for i in range(1, m+1): 
+            for j in range(0,n): 
+                ax.text(i-0.5,j+0.5,grille[i+m*(n-1-j)-1],ha='center', va='center', fontsize=12)
+       
+        # Amélioration visuelle
+        ax.set_xticks([])
+        ax.set_yticks([])
+        ax.set_xlim(0, m)
+        ax.set_ylim(0, n)
+        plt.show()
+
 
     @classmethod
     def grid_from_file(cls, file_name): 
