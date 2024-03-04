@@ -122,6 +122,8 @@ class Graph:
         return None   
     
 
+    ## Aller voir le fichier Node_A_Star.py avant de lire la suite
+
     def A_star(self,src,dst):
         '''
         Finds a shortest path to src to dst by A*.
