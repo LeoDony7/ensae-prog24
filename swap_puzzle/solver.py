@@ -136,3 +136,34 @@ class Solver():
 ## The complexity of the BFS algorithm is O((n*m)! + nb_edges)
 ## With such a complexity, this solver is great until for grid with approximately 6 or less cells.
 ## When n*m goes greater than 8 or 9, (n*m)! is too large and it tooks a while to solve the gid
+            
+
+    def get_solution_A_star(self):
+        '''
+        This is the solution the improve of the question 7 solution, with A* instead of BFS
+
+        The principle of this solver is to create a graph where each node represents a state the grid can take,
+        and to found the shortest path from the initial state to the solved state using A* algorithm.
+
+        The format of the result is still [((i1, j1), (i2, j2)), ((i1', j1'), (i2', j2')), ...].
+
+        '''
+        permutation=[i for i in range(1,(self.puzzle.n*self.puzzle.m)+1)]
+        liste_permutation=itertools.permutations(permutation) #this list stocks all permutations of the grid as tuples
+        my_graph=Graph([i+(self.puzzle.n,self.puzzle.m) for i in liste_permutation])
+        #each node of the graph is the key of one of the grid state
+        for node1 in my_graph.nodes:
+            for node2 in my_graph.nodes:
+                if are_neighbours(node1,node2):
+                    if (node2 not in my_graph.graph[node1] or node1 not in my_graph.graph[node2]):
+                        my_graph.add_edge(node1,node2)
+        #for each pair of nodes in the graph, we add an edge to the graph if nodes are neighbours
+        key_sorted=tuple(permutation+[self.puzzle.n]+[self.puzzle.m])
+        #this one is the key corresponding the solved state of the grid
+        node_path=my_graph.A_star(self.puzzle.key,key_sorted)
+        if node_path==None:
+            print("This grid cannot be solved")
+        else:
+            swap_list=[tuple(what_is_the_swap(node_path[i],node_path[i+1])) for i in range(0, len(node_path)-1)]
+            #just rewriting the result to get the right format
+            print(swap_list)

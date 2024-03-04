@@ -1,6 +1,9 @@
 """
 This is the graph module. It contains a minimalistic Graph class.
 """
+from node import Node
+from node import h
+import heapq
 
 class Graph:
     """
@@ -117,6 +120,31 @@ class Graph:
                 #return path[node-1]
                 return path_bis[node]
         return None   
+    
+    def A_star(self,src,rch):
+        open_list=[]
+        heapq.heapify(open_list)
+        closed_list={} # dictionnaire des Nodes deja parcourus, la clé sera un Node et la valeur associée sera Node.liste
+        dict_chemin={}
+        start_node=Node(src,0,0)
+        open_list.append(start_node)
+        dict_chemin[start_node]=[start_node] # dictionnaire qui à chaque Node N donne la liste de Node permettant d'arriver à N depuis src
+        while len(open_list)!=0:
+            u=heapq.heappop(open_list)  # u est un Node
+            if u.liste==rch:
+                return [noeud.liste for noeud in dict_chemin[u]]  # on ne veut que le chemin de listes (listes qui sont les noeuds du graphe)
+            neighbours=self.graph[u.liste] # les éléments de neighbours sont des listes
+            node_neighbours=[Node(i,h(i),u.g +1) for i in neighbours]
+            for v in node_neighbours:  # v est un node
+                Nodes_with_same_value=[]
+                for k in open_list:
+                    if (k.liste==v.liste and k.f<v.f):
+                        Nodes_with_same_value.append(k)
+            # Ce sont les Node de open_list qui ont la même liste que le voisin mais avec une heuristique plus petite
+                if (v not in closed_list) or Nodes_with_same_value==[]:
+                    open_list.append(v)
+                    dict_chemin[v]=dict_chemin[u]+[v]
+            closed_list[u]=u.liste
         
 
     @classmethod

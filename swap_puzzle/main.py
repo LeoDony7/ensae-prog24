@@ -17,4 +17,5 @@ T= Grid.grid_from_file("../input/grid_test.in")
 Test=Solver(T)
 Test.get_solution_bis()
 
+#Test.get_solution_A_star()
 
