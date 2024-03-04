@@ -17,7 +17,7 @@ class Grid():
         The state of the grid, a list of list such that state[i][j] is the number in the cell (i, j), i.e., in the i-th line and j-th column. 
         Note: lines are numbered 0..m and columns are numbered 0..n.
     coordinates: dict[int,(int,int)]
-        Gives coordinates in the grid of each integer between 1 and m*n. coordinates[k] returns the coordinates (i_k,j_k) of the cell containing k
+        Gives coordinates in the grid of each integer between 1 and m*n. coordinates[k] returns the coordinates (i_k,j_k) of the cell containing the number k
     key: tuple(int)
         An unique immutable key representing a grid. It has n*m+2 cells
         The n*m first elements are the number on the grid, in the reading order.
@@ -66,7 +66,7 @@ class Grid():
 
     def is_sorted(self):
         """
-        Checks is the current state of the grid is sorte and returns the answer as a boolean.
+        Checks if the current state of the grid is sorted and returns the answer as a boolean.
         """
         for i in range(0, self.m -1):
             for j in range(0,self.n-1):
@@ -89,8 +89,8 @@ class Grid():
             value_2=self.state[i_2][j_2]
             self.state[i_1][j_1]=value_2
             self.state[i_2][j_2]=value_1
-            ##Updating coordinates of each integer
             self.coordinates={self.state[i][j] :(i,j) for i in range(self.m) for j in range(self.n)}
+            ## Updating coordinates of each integer
         else:
             raise ValueError
 
@@ -111,8 +111,8 @@ class Grid():
                 value_2=self.state[i_2][j_2]
                 self.state[i_1][j_1]=value_2
                 self.state[i_2][j_2]=value_1
-                ##Updating coordinates of each integer
                 self.coordinates={self.state[i][j] :(i,j) for i in range(self.m) for j in range(self.n)}
+                ## Updating coordinates of each integer
             else:
                 raise ValueError
 

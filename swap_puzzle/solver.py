@@ -83,15 +83,15 @@ class Solver():
         [((i1, j1), (i2, j2)), ((i1', j1'), (i2', j2')), ...]. 
 
         The principle of this resolution is to solve the puzzle by putting 1 on the right cell, then doing the same with 2, etc... until the puzzle is solved.
-        First are done swaps that put the number on the right column and then those changing the line. By doing this way, placing correctly the k-th number doesn't change the position of previous number, that is already correct.
+        For a given number, first are done swaps that put the number on the right column and then those changing the line. By doing this way, placing correctly the k-th number doesn't change the position of previous numbers, that are already corrects.
         """
         liste_swap=[]
         nombre_cases=self.puzzle.m*self.puzzle.n
         for k in range(1,nombre_cases+1):
-            ##Coordinates of k just before starting putting it at the right place
-            i_k,j_k = self.puzzle.coordinates[k] 
-            ##Coordinates of the cell where k must be placed
+            i_k,j_k = self.puzzle.coordinates[k]
+            ## Coordinates of k just before starting putting it at the right place
             i0,j0= (k-1)//self.puzzle.n,(k-1)%self.puzzle.n 
+            ## Coordinates of the cell where k must be placed
             if j_k>j0:
                 liste_cases= [(i_k,j_k)]+[(i_k,j) for j in range(j_k-1,j0-1,-1)]+[(i,j0) for i in range(i_k-1,i0-1,-1)]
             else :
@@ -102,7 +102,7 @@ class Solver():
         print(liste_swap)
 
 
-    def get_solution_bis(self):
+    def get_solution_bfs(self):
         '''
         This is the solution exposed in the question 7
 
@@ -113,23 +113,24 @@ class Solver():
 
         '''
         permutation=[i for i in range(1,(self.puzzle.n*self.puzzle.m)+1)]
-        liste_permutation=itertools.permutations(permutation) #this list stocks all permutations of the grid as tuples
+        liste_permutation=itertools.permutations(permutation) 
+        # This list stocks all permutations of the grid as tuples
         my_graph=Graph([i+(self.puzzle.n,self.puzzle.m) for i in liste_permutation])
-        #each node of the graph is the key of one of the grid state
+        # Each node of the graph is the key of one of the grid state
         for node1 in my_graph.nodes:
             for node2 in my_graph.nodes:
                 if are_neighbours(node1,node2):
                     if (node2 not in my_graph.graph[node1] or node1 not in my_graph.graph[node2]):
                         my_graph.add_edge(node1,node2)
-        #for each pair of nodes in the graph, we add an edge to the graph if nodes are neighbours
+        # For each pair of nodes in the graph, we add an edge to the graph if nodes are neighbours
         key_sorted=tuple(permutation+[self.puzzle.n]+[self.puzzle.m])
-        #this one is the key corresponding the solved state of the grid
+        # This one is the key corresponding the solved state of the grid (the sorter one)
         node_path=my_graph.bfs(self.puzzle.key,key_sorted)
         if node_path==None:
             print("This grid cannot be solved")
         else:
             swap_list=[tuple(what_is_the_swap(node_path[i],node_path[i+1])) for i in range(0, len(node_path)-1)]
-            #just rewriting the result to get the right format
+            # Just rewriting the result to get the right format
             print(swap_list)
 
 ## The complexity of the creation of the graph is O((m*n)!)
@@ -140,30 +141,27 @@ class Solver():
 
     def get_solution_A_star(self):
         '''
-        This is the solution the improve of the question 7 solution, with A* instead of BFS
+        This is the solution the improve of the question 7 solution, with A* instead of BFS.
 
-        The principle of this solver is to create a graph where each node represents a state the grid can take,
-        and to found the shortest path from the initial state to the solved state using A* algorithm.
+        It doesn't need any further comments, because it is the same code as for get_solution_bfs.
+        We just replaced BFS by A* in the search of a path between 2 nodes. 
 
         The format of the result is still [((i1, j1), (i2, j2)), ((i1', j1'), (i2', j2')), ...].
 
         '''
         permutation=[i for i in range(1,(self.puzzle.n*self.puzzle.m)+1)]
-        liste_permutation=itertools.permutations(permutation) #this list stocks all permutations of the grid as tuples
+        liste_permutation=itertools.permutations(permutation)
         my_graph=Graph([i+(self.puzzle.n,self.puzzle.m) for i in liste_permutation])
-        #each node of the graph is the key of one of the grid state
         for node1 in my_graph.nodes:
             for node2 in my_graph.nodes:
                 if are_neighbours(node1,node2):
                     if (node2 not in my_graph.graph[node1] or node1 not in my_graph.graph[node2]):
                         my_graph.add_edge(node1,node2)
-        #for each pair of nodes in the graph, we add an edge to the graph if nodes are neighbours
         key_sorted=tuple(permutation+[self.puzzle.n]+[self.puzzle.m])
-        #this one is the key corresponding the solved state of the grid
         node_path=my_graph.A_star(self.puzzle.key,key_sorted)
+        # Here is the only difference with the previous solution
         if node_path==None:
             print("This grid cannot be solved")
         else:
             swap_list=[tuple(what_is_the_swap(node_path[i],node_path[i+1])) for i in range(0, len(node_path)-1)]
-            #just rewriting the result to get the right format
             print(swap_list)
