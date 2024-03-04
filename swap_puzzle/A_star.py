@@ -18,7 +18,7 @@ class Node():
 
 # S'il y a k cases non à leur place, il faut au minimum k//2 swaps pour arriver à la solution
 
-def h(liste):
+def h(liste,n,m):
     node_final=tuple([i for i in range(1,n*m+1)]+[n]+[m])
     S=0
     for i in range(len(liste)):
@@ -51,7 +51,8 @@ def A_star(self,src,rch):
                 open_list.append(v)
                 dict_chemin[v]=dict_chemin[u]+[v]
         closed_list[u]=u.liste
-
+    
+    
 
 
 

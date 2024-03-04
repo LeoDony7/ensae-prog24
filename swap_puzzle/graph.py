@@ -1,6 +1,9 @@
 """
 This is the graph module. It contains a minimalistic Graph class.
 """
+from Node_A_Star import Node
+from Node_A_Star import h
+import heapq
 
 class Graph:
     """
@@ -117,7 +120,68 @@ class Graph:
                 #return path[node-1]
                 return path_bis[node]
         return None   
+    
+
+    ## Aller voir le fichier Node_A_Star.py avant de lire la suite
+
+    def A_star(self,src,dst):
+        '''
+        Finds a shortest path to src to dst by A*.
+
+        Parameters:
+        -----------
+        src: NodeType
+            The source node.
+        dst: NodeType
+            The destination node.
         
+        Output: 
+        -------
+        path: list[NodeType] | None
+            The shortest path from src to dst. Returns None if dst is not reachable from src  
+        '''
+        ## Initialisation
+        open_list=[]
+        heapq.heapify(open_list)
+        # open_list est la file de priorité, ses élements sont des Nodes, puisqu'on veut classer les élements selon la relation de comparaison sur la classe Node
+        closed_list={}
+        # closed _list est un dictionnaire qui stocke les noeuds déjà parcourus, les clés sont des Nodes, les valeurs sont des tuples. 
+        # Si le noeud x a déjà été parcouru, closed_list[Node(x)]=Node(x).noeud
+        dict_chemin={}
+        # dict_chemin stocke le chemin jusqu'à chaque noeud depuis src, les clés sont des Nodes et les valeurs des listes de Nodes.
+        # dict_chemin[Node(x)]=[start_node, ..., Node(x)]
+        start_node=Node(src,0,0) 
+        # start_node est le Node correspondant à src avec un coût et une estimation valant 0
+        open_list.append(start_node)
+        dict_chemin[start_node]=[start_node]
+
+        ## Boucle
+        while len(open_list)!=0:
+            u=heapq.heappop(open_list)
+            # u est un Node
+            if u.noeud==dst:
+                return [X.noeud for X in dict_chemin[u]] 
+            # Puisqu'on veut retourner une liste de noeuds (qui sont des tuples), donc on ne récupère que les tuples correspondant à chaque Node dans le chemin 
+            neighbours=self.graph[u.noeud]
+            # neighbours est une liste contenant tout les noeuds voisins du noeud représenté par le Node u
+            node_neighbours=[Node(i,h(i),u.g +1) for i in neighbours]
+            # On transforme cette liste de noeuds en liste de Nodes en calculant le coût et l'estimation de chaque noeud
+            for v in node_neighbours:
+                # v est un Node
+                Same_noeud=[]
+                for k in open_list:
+                    if (k.noeud==v.noeud and k.f<v.f):
+                        Same_noeud.append(k)
+                # Ce sont les Node de open_list qui représentent le même noeud que v mais avec une heuristique plus petite
+                if (v not in closed_list) or Same_noeud==[]:
+                    # On vérifie les 2 conditions nécéssaires pour pouvoir ajouter le voisin dans l'open_list
+                    # Ces 2 conditions sont : v n'est pas déjà dans la closed_list, v n'est pas dans l'open_list avec une heuristique plus faible
+                    open_list.append(v)
+                    dict_chemin[v]=dict_chemin[u]+[v]
+                    # On met à jour le chemin jusqu'aux voisins ajoutés                
+            closed_list[u]=u.noeud
+            # On ajoute le noeud visité à la closed_list
+        return None
 
     @classmethod
     def graph_from_file(cls, file_name):
