@@ -1,7 +1,8 @@
 from grid import Grid
 from solver import Solver
+from graph import Graph
 
-
+'''
 g = Grid(2, 3)
 print(g)
 
@@ -23,3 +24,9 @@ Test.get_solution_bfs()
 
 H=Grid.grid_from_file("../input/grid4.in")
 H.representation_graphique()
+'''
+
+my_graph=Graph.graph_from_file("../input/graph2.in")
+
+print(my_graph.bfs(4,10))
+

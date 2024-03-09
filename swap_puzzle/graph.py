@@ -102,9 +102,7 @@ class Graph:
         """ 
         visited=[]
         queue=[src]
-        #path=[[] for i in range(self.nb_nodes)]
         path_bis={i:[] for i in self.nodes}
-        #path[src-1]=[src]
         path_bis[src]=[src]
         while len(queue)>0:
             node=queue.pop(0)
@@ -112,15 +110,38 @@ class Graph:
                 visited.append(node)
                 neighbours=self.graph[node]
                 for neighbour in neighbours:
-                    if neighbour not in queue:  ##verifier ca pour être sur qu'on a pas de répétition de noeuds
-                        #path[neighbour-1]+=(path[node-1]+[neighbour])
+                    if neighbour not in queue:
                         path_bis[neighbour]+=path_bis[node]+[neighbour]
                     queue.append(neighbour)
             if node==dst:
-                #return path[node-1]
                 return path_bis[node]
         return None   
     
+    def bfs_upgrade(self, src, dst): 
+        visited=[]
+        # Dans visited les éléments sont des noeuds
+        queue=[]
+        heapq.heapify(queue)
+        src_node=Node(src,0,0)
+        # On réutilise la structure de Node utilisée pour A* mais ici on associe seulement une heuristique à un noeud, on ne définit pas le cout
+        queue.append(src_node)
+        # Dans queue les éléments sont des Nodes
+        path={}
+        path[src]=[src]
+        # Dans path les clés sont des noeuds et les valeurs des listes de noeuds
+        while len(queue)>0:
+            node=heapq.heappop(queue) # node est un Node
+            if node.noeud not in visited:
+                visited.append(node.noeud)
+                neighbours=self.graph[node.noeud] # voisins en tant que noeuds du graphe
+                neighbours_node=[Node(u,h(u),0) for u in neighbours] # voisins en tant que Node
+                for neighbour in neighbours_node: # on regarde les Nodes voisins
+                    if neighbour not in queue:
+                        path[neighbour.noeud]=path[node.noeud]+[neighbour.noeud]
+                    queue.append(neighbour)
+            if node.noeud==dst:
+                return path[node.noeud]
+        return None  
 
     ## Aller voir le fichier Node_A_Star.py avant de lire la suite
 
