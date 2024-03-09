@@ -1,10 +1,10 @@
 '''
-This is a module containing useful functions and class for the A* algorithm
+This is a module containing useful functions and class for the upgrade of BFS and the A* algorithm
 '''
 
 class Node():
     '''
-    A class representing nodes for A*
+    A class representing nodes for BFS_upgrade A*
 
     Attributes:
     -----------
@@ -35,6 +35,12 @@ class Node():
         self.g=g
         self.f=self.h+self.g 
 
+# Dans le cas de cas de BFS_upgrade on veut seulement associer à chauqe noeud une estimation de la distance restante.
+# Dans le cas de A* on veut également le coût nécessaire pour arriver au noeud.
+# On utilisera la même représentation dans les 2 cas, mais en prenant g=0 pour tous les noeuds dans BFS_upgrade
+# Pour BFS_upgrade on aura donc f=h et pour A*, f=g+h
+# Dans les 2 cas on comparera donc 2 noeuds en comparant la valeur de f pour ces noeuds
+
        
     def __lt__(self,other_Node):
         '''
@@ -56,6 +62,8 @@ def h(noeud):
     Here the node is a grid key, as explained in grid.py
     And the destination node is the key of the sorted grid
 
+    The estimation of the distance is the number of nodes that are not at the right place in the grid.
+    
     Parameters:
     -----------
     noeud : tuple
@@ -66,5 +74,5 @@ def h(noeud):
     for i in range(len(noeud)):
         if noeud[i]!=node_final[i]:
             S+=1
-    return S//2
+    return S
     

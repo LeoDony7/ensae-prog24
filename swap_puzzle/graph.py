@@ -117,25 +117,49 @@ class Graph:
                 return path_bis[node]
         return None   
     
-    def bfs_upgrade(self, src, dst): 
+
+    ## Aller voir le fichier Node_A_Star.py avant de lire la suite
+
+    def bfs_upgrade(self, src, dst):
+        """
+        Finds a shortest path from src to dst by BFS.
+        This version is upgraded. We use a priority queue instead of a normal queue when exploring a new node.  
+
+        Parameters: 
+        -----------
+        src: NodeType
+            The source node.
+        dst: NodeType
+            The destination node.
+
+        Output: 
+        -------
+        path: list[NodeType] | None
+            The shortest path from src to dst. Returns None if dst is not reachable from src
+        """ 
         visited=[]
-        # Dans visited les éléments sont des noeuds
+        # Les élements de visited sont des noeuds, les noeuds déja visité lors du parcours du graphe
         queue=[]
         heapq.heapify(queue)
+        # queue est la file de priorité
         src_node=Node(src,0,0)
-        # On réutilise la structure de Node utilisée pour A* mais ici on associe seulement une heuristique à un noeud, on ne définit pas le cout
+        # Les élements de queue sont des Nodes, comme défini dans le fichier Node_A_Star.py
+        # On ne définit ici que l'heuristique h du noeud, qui est une estimation de la distance à l'arrivée. On ne s'intéresse pas au cout pour arriver au noeud.
         queue.append(src_node)
-        # Dans queue les éléments sont des Nodes
         path={}
         path[src]=[src]
-        # Dans path les clés sont des noeuds et les valeurs des listes de noeuds
+        # path est le dictionnaire donnant le chemin jusqu'à un noeud
+        # path[noeud]=[src,n1,n2,...,noeud] où les ni sont des noeuds
         while len(queue)>0:
-            node=heapq.heappop(queue) # node est un Node
+            node=heapq.heappop(queue)
+            # node est un Node
             if node.noeud not in visited:
                 visited.append(node.noeud)
-                neighbours=self.graph[node.noeud] # voisins en tant que noeuds du graphe
-                neighbours_node=[Node(u,h(u),0) for u in neighbours] # voisins en tant que Node
-                for neighbour in neighbours_node: # on regarde les Nodes voisins
+                neighbours=self.graph[node.noeud]
+                # Liste des voisins du noeud exploré. Liste de noeuds
+                neighbours_node=[Node(u,h(u),0) for u in neighbours]
+                # Liste des voisins du noeud exploré, avec l'heuristique de chaque voisin. Liste de Nodes
+                for neighbour in neighbours_node: 
                     if neighbour not in queue:
                         path[neighbour.noeud]=path[node.noeud]+[neighbour.noeud]
                     queue.append(neighbour)
@@ -143,7 +167,6 @@ class Graph:
                 return path[node.noeud]
         return None  
 
-    ## Aller voir le fichier Node_A_Star.py avant de lire la suite
 
     def A_star(self,src,dst):
         '''
