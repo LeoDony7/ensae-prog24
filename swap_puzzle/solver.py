@@ -89,13 +89,15 @@ class Solver():
         nombre_cases=self.puzzle.m*self.puzzle.n
         for k in range(1,nombre_cases+1):
             i_k,j_k = self.puzzle.coordinates[k]
-            ## Coordinates of k just before starting putting it at the right place
+            ## Coordonnées de k avant qu'on le déplace.
             i0,j0= (k-1)//self.puzzle.n,(k-1)%self.puzzle.n 
-            ## Coordinates of the cell where k must be placed
+            ## Coordonnées de la case où doit être placé k.
             if j_k>j0:
                 liste_cases= [(i_k,j_k)]+[(i_k,j) for j in range(j_k-1,j0-1,-1)]+[(i,j0) for i in range(i_k-1,i0-1,-1)]
             else :
                 liste_cases= [(i_k,j_k)]+[(i_k,j) for j in range(j_k+1,j0+1)]+[(i,j0) for i in range(i_k-1,i0-1,-1)]
+            # les cases par où doit passer k pour arriver à sa place dépend de si k est au départ dans
+            # une colonne à gauche ou a droite de la colonne où il doit être placé.
             liste_swap_k=[(liste_cases[i],liste_cases[i+1])for i in range(len(liste_cases)-1)]
             self.puzzle.swap_seq(liste_swap_k)
             liste_swap+=liste_swap_k
@@ -131,6 +133,7 @@ class Solver():
         else:
             swap_list=[tuple(what_is_the_swap(node_path[i],node_path[i+1])) for i in range(0, len(node_path)-1)]
             # Just rewriting the result to get the right format
+            self.puzzle.swap_seq(swap_list)
             return swap_list
 
             
@@ -160,4 +163,5 @@ class Solver():
             return "This grid cannot be solved"
         else:
             swap_list=[tuple(what_is_the_swap(node_path[i],node_path[i+1])) for i in range(0, len(node_path)-1)]
+            self.puzzle.swap_seq(swap_list)
             return swap_list

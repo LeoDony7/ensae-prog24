@@ -5,7 +5,6 @@ from solver import Solver
 from graph import Graph
 
 
-
 ##
 
 g = Grid(2, 3)
@@ -30,6 +29,8 @@ print(g)
 
 print(puzzle.get_solution())
 
+print(g)
+
 
 ## Question n°4
 
@@ -43,8 +44,15 @@ print(g.key)
 
 ## Question n°7
 
+g = Grid.grid_from_file("../input/grid_test.in")
+
+print(g)
+
+puzzle=Solver(g)
+
 print(puzzle.get_solution_bfs())
 
+print(g)
 
 ## A*
 
