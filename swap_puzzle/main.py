@@ -1,8 +1,13 @@
+## Imports
+
 from grid import Grid
 from solver import Solver
 from graph import Graph
 
-'''
+
+
+##
+
 g = Grid(2, 3)
 print(g)
 
@@ -13,21 +18,37 @@ print(file_name)
 
 g = Grid.grid_from_file(file_name)
 print(g)
-'''
 
-T= Grid.grid_from_file("../input/grid1.in")
-Test=Solver(T)
-#print(Test.get_solution())
-print(Test.get_solution_bfs())
 
-'''
-H=Grid.grid_from_file("../input/grid4.in")
-H.representation_graphique()
-'''
+## Question n°3 
 
-'''
-my_graph=Graph.graph_from_file("../input/graph2.in")
+g = Grid.grid_from_file("../input/grid_test.in")
 
-print(my_graph.bfs(4,10))
-'''
+puzzle=Solver(g)
+
+print(g)
+
+print(puzzle.get_solution())
+
+
+## Question n°4
+
+g.representation_graphique()
+
+
+## Question n°6
+
+print(g.key)
+
+
+## Question n°7
+
+print(puzzle.get_solution_bfs())
+
+
+## A*
+
+print(puzzle.get_solution_A_star())
+
+
 

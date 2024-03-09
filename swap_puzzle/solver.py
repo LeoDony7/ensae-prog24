@@ -133,10 +133,6 @@ class Solver():
             # Just rewriting the result to get the right format
             return swap_list
 
-## The complexity of the creation of the graph is O((m*n)!)
-## The complexity of the BFS algorithm is O((n*m)! + nb_edges)
-## With such a complexity, this solver is great until for grid with approximately 6 or less cells.
-## When n*m goes greater than 8 or 9, (n*m)! is too large and it tooks a while to solve the gid
             
 
     def get_solution_A_star(self):
