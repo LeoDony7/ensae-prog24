@@ -62,7 +62,7 @@ def h(noeud):
     Here the node is a grid key, as explained in grid.py
     And the destination node is the key of the sorted grid
 
-    The estimation of the distance is the number of nodes that are not at the right place in the grid.
+    The estimation of the distance is the minimal number of swaps needed to solve the grid.
     
     Parameters:
     -----------
@@ -74,5 +74,5 @@ def h(noeud):
     for i in range(len(noeud)):
         if noeud[i]!=node_final[i]:
             S+=1
-    return S
+    return S//2
     

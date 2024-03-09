@@ -2,8 +2,8 @@
 import itertools
 import random
 
-from swap_puzzle.A_star import Node
-from swap_puzzle.A_star import h
+from Node_A_Star import Node
+from Node_A_Star import h
 
 
 
@@ -35,7 +35,7 @@ def game_level(level) :
     
     for M in liste_grilles :
         if len(M) < 4 and len(M[0]) < 5 :
-            liste_easy.append(M) # Toute liste de taille infèrieure à 4x5 est considérée facile
+            liste_easy.append(M) # Toute liste de taille inférieure à 4x5 est considérée facile
         
         elif (len(M) < 8 and len(M[0]) < 9) or (len(M) < 4 and len(M) > 4) :
             if h(M) < 8*9/4 : # L'heuristique maximale possible est 8*9/2 (i.e aucune case d'une grille 8x9 à sa place), on découpe en deux sachant cela
