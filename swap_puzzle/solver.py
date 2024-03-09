@@ -99,7 +99,7 @@ class Solver():
             liste_swap_k=[(liste_cases[i],liste_cases[i+1])for i in range(len(liste_cases)-1)]
             self.puzzle.swap_seq(liste_swap_k)
             liste_swap+=liste_swap_k
-        print(liste_swap)
+        return liste_swap
 
 
     def get_solution_bfs(self):
@@ -127,11 +127,11 @@ class Solver():
         # This one is the key corresponding the solved state of the grid (the sorter one)
         node_path=my_graph.bfs(self.puzzle.key,key_sorted)
         if node_path==None:
-            print("This grid cannot be solved")
+            return "This grid cannot be solved"
         else:
             swap_list=[tuple(what_is_the_swap(node_path[i],node_path[i+1])) for i in range(0, len(node_path)-1)]
             # Just rewriting the result to get the right format
-            print(swap_list)
+            return swap_list
 
 ## The complexity of the creation of the graph is O((m*n)!)
 ## The complexity of the BFS algorithm is O((n*m)! + nb_edges)
@@ -161,7 +161,7 @@ class Solver():
         node_path=my_graph.A_star(self.puzzle.key,key_sorted)
         # Here is the only difference with the previous solution
         if node_path==None:
-            print("This grid cannot be solved")
+            return "This grid cannot be solved"
         else:
             swap_list=[tuple(what_is_the_swap(node_path[i],node_path[i+1])) for i in range(0, len(node_path)-1)]
-            print(swap_list)
+            return swap_list

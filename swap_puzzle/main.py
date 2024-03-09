@@ -13,20 +13,21 @@ print(file_name)
 
 g = Grid.grid_from_file(file_name)
 print(g)
+'''
 
-
-T= Grid.grid_from_file("../input/grid_test.in")
+T= Grid.grid_from_file("../input/grid1.in")
 Test=Solver(T)
-Test.get_solution()
-Test.get_solution_bfs()
+#print(Test.get_solution())
+print(Test.get_solution_bfs())
 
-
-
+'''
 H=Grid.grid_from_file("../input/grid4.in")
 H.representation_graphique()
 '''
 
+'''
 my_graph=Graph.graph_from_file("../input/graph2.in")
 
 print(my_graph.bfs(4,10))
+'''
 
