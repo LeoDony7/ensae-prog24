@@ -91,7 +91,7 @@ class Grid():
             self.state[i_1][j_1]=value_2
             self.state[i_2][j_2]=value_1
             self.coordinates={self.state[i][j] :(i,j) for i in range(self.m) for j in range(self.n)}
-            ## Updating coordinates of each integer
+            # On met à jour les coordonnées des nombres qui ont été déplacés
         else:
             raise ValueError
 
@@ -113,7 +113,7 @@ class Grid():
                 self.state[i_1][j_1]=value_2
                 self.state[i_2][j_2]=value_1
                 self.coordinates={self.state[i][j] :(i,j) for i in range(self.m) for j in range(self.n)}
-                ## Updating coordinates of each integer
+                # On met à jour les coordonnées des nombres qui ont été déplacés
             else:
                 raise ValueError
             
@@ -125,14 +125,14 @@ class Grid():
         m=self.key[-1]
         grille=self.key[:-2]  # tout sauf les 2 derniers
         fig,ax=plt.subplots()
-        ax.set_yticks(np.arange(0,m+1,1)) # Endroit où on place les marqueurs sur l'axe des Y, donc en rapport avec le nombre de lignes du truc
-        ax.set_xticks(np.arange(0,n+1,1)) # Endroit où on place les marqueurs sur l'axe des X, donc en rapport avec le nombre de colonnes du truc
+        ax.set_yticks(np.arange(0,m+1,1)) # Endroit où on place les marqueurs sur l'axe des Y, donc en rapport avec le nombre de lignes
+        ax.set_xticks(np.arange(0,n+1,1)) # Endroit où on place les marqueurs sur l'axe des X, donc en rapport avec le nombre de colonnes
 
         # Création de la grille vierge
         for i in range(1, m+1):
-            ax.axhline(i, color='black', linewidth=2) # Lignes horizontales qui délimitent les lignes
+            ax.axhline(i, color='black', linewidth=2) # Barres horizontales qui délimitent les lignes
         for j in range(1,n+1):
-            ax.axvline(j, color='black', linewidth=2) # Lignes verticales qui délimitent les colonnes
+            ax.axvline(j, color='black', linewidth=2) # Barres verticales qui délimitent les colonnes
 
         # Remplissage de la grille
         for i in range(1, n+1): 

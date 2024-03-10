@@ -116,23 +116,23 @@ class Solver():
         '''
         permutation=[i for i in range(1,(self.puzzle.n*self.puzzle.m)+1)]
         liste_permutation=itertools.permutations(permutation) 
-        # This list stocks all permutations of the grid as tuples
+        # On crée toutes les permutations de [1,...,m*n] sous forme de tuples.
         my_graph=Graph([i+(self.puzzle.n,self.puzzle.m) for i in liste_permutation])
-        # Each node of the graph is the key of one of the grid state
+        # Chaque noeud du graphe est la clé d'un état de la grille.
         for node1 in my_graph.nodes:
             for node2 in my_graph.nodes:
                 if are_neighbours(node1,node2):
                     if (node2 not in my_graph.graph[node1] or node1 not in my_graph.graph[node2]):
                         my_graph.add_edge(node1,node2)
-        # For each pair of nodes in the graph, we add an edge to the graph if nodes are neighbours
+        # Pour chaque paire de noeuds dans le graphe, on vérifie s'ils sont voisins et donc s'il faut ajouter une arête entre les 2.
         key_sorted=tuple(permutation+[self.puzzle.n]+[self.puzzle.m])
-        # This one is the key corresponding the solved state of the grid (the sorter one)
+        # On explicite la clé correspondant à l'état trié de la grille, elle servira de destination dans le parcours de graphe.
         node_path=my_graph.bfs(self.puzzle.key,key_sorted)
         if node_path==None:
             return "This grid cannot be solved"
         else:
             swap_list=[tuple(what_is_the_swap(node_path[i],node_path[i+1])) for i in range(0, len(node_path)-1)]
-            # Just rewriting the result to get the right format
+            # node_path est une liste de noeuds donc on met le résultat au bon format, i.e. une liste de swaps (couple de cases)
             self.puzzle.swap_seq(swap_list)
             return swap_list
 
@@ -158,7 +158,7 @@ class Solver():
                         my_graph.add_edge(node1,node2)
         key_sorted=tuple(permutation+[self.puzzle.n]+[self.puzzle.m])
         node_path=my_graph.A_star(self.puzzle.key,key_sorted)
-        # Here is the only difference with the previous solution
+        # La seule différence avec la solution précédente est qu'on utilise l'algorithme A* à la place de BFS
         if node_path==None:
             return "This grid cannot be solved"
         else:
